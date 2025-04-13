@@ -30,9 +30,12 @@ export const GlowingButton: React.FC<ButtonProps> = ({ children, style, onPress 
   useLayoutEffect(() => {
     if (refContainer.current) {
       // @ts-ignore
-      const { width, height } = refContainer.current.unstable_getBoundingClientRect();
-      setButtonWidth(width);
-      setButtonHeight(height);
+      refContainer.current.measure((_x, _y, width, height) => {
+        if (width > 0 && height > 0) {
+          setButtonWidth(width);
+          setButtonHeight(height);
+        }
+      });
     }
   }, []);
 
