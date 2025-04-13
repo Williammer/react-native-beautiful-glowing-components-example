@@ -3,9 +3,70 @@ import { GlaringSegment } from '@/components/GlaringSegment';
 import { GlowingButton } from '@/components/GlowingButton';
 import { GradientButton } from '@/components/GradientButton';
 import { MotiView } from 'moti';
-import { StyleSheet, SafeAreaView, Text, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, SafeAreaView, Text, Image, Alert, ActivityIndicator } from 'react-native';
+import { useRouter } from 'expo-router';
 
 export default function MainScreen() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleLogin = () => {
+    // Reset errors
+    setEmailError('');
+    setPasswordError('');
+
+    // Validate inputs
+    let isValid = true;
+
+    if (!email) {
+      setEmailError('Email is required');
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email');
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
+    // Show loading state
+    setIsLoading(true);
+
+    // Simulate authentication delay
+    setTimeout(() => {
+      setIsLoading(false);
+
+      // For demo purposes, we'll accept any valid input
+      // In a real app, you would verify credentials with a backend service
+      router.replace('/livestream');
+    }, 1500);
+  };
+
+  const handleCreateAccount = () => {
+    Alert.alert(
+      "Create Account",
+      "This would navigate to a signup page in a complete app.",
+      [{ text: "OK" }]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <MotiView
@@ -32,15 +93,40 @@ export default function MainScreen() {
           duration: 1200,
           delay: 800,
         }}>
-        <GlaringSegment style={styles.segment} >
+        <GlaringSegment style={styles.segment}>
           <Text style={styles.heading}>Hello</Text>
-          <FormInput placeholder="Email address" />
-          <FormInput placeholder="Password" secureTextEntry />
-          <GlowingButton style={styles.button}>Log in</GlowingButton>
+
+          <FormInput
+            placeholder="Email address"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            error={emailError}
+          />
+
+          <FormInput
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            autoComplete="password"
+            error={passwordError}
+          />
+
+          <GlowingButton
+            style={styles.button}
+            onPress={handleLogin}>
+            {isLoading ? <ActivityIndicator color="white" /> : "Log in"}
+          </GlowingButton>
+
           <Text style={styles.text}>Just getting started?</Text>
+
           <GradientButton
             style={styles.button}
-            className="create-account-button">
+            className="create-account-button"
+            onPress={handleCreateAccount}>
             Create an account
           </GradientButton>
         </GlaringSegment>
@@ -72,6 +158,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: 10,
+    minHeight: 48,
   },
   text: {
     marginTop: 16,

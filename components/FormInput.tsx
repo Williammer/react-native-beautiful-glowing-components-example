@@ -1,20 +1,28 @@
 import React from 'react';
-import { StyleSheet, TextInput, TextInputProps } from 'react-native';
+import { StyleSheet, TextInput, TextInputProps, View, Text } from 'react-native';
 
-type Props = TextInputProps;
-export const FormInput: React.FC<Props> = inuptProps => {
+type Props = TextInputProps & {
+  error?: string;
+};
+
+export const FormInput: React.FC<Props> = ({ error, ...inputProps }) => {
   return (
-    <TextInput
-      placeholderTextColor="#ffffffa0"
-      {...inuptProps}
-      style={[styles.container]}
-    />
+    <View style={styles.wrapper}>
+      <TextInput
+        placeholderTextColor="#ffffffa0"
+        {...inputProps}
+        style={[styles.container, error && styles.inputError]}
+      />
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    marginVertical: 10,
+  },
   container: {
-    margin: 10,
     paddingHorizontal: 10,
     height: 44,
     fontSize: 18,
@@ -28,4 +36,13 @@ const styles = StyleSheet.create({
       0 6px 16px 0 rgba(0, 0, 0, 0.22)
     `,
   },
+  inputError: {
+    borderColor: '#f44336',
+  },
+  errorText: {
+    color: '#f44336',
+    fontSize: 12,
+    marginTop: 4,
+    marginLeft: 4,
+  }
 });

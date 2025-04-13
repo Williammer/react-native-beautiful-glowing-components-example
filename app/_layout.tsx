@@ -35,8 +35,10 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="livestream" />
+        <Stack.Screen name="livestream-detail" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
