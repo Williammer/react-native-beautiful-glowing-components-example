@@ -36,9 +36,13 @@ export default function MainScreen() {
           <Text style={styles.heading}>Hello</Text>
           <FormInput placeholder="Email address" />
           <FormInput placeholder="Password" secureTextEntry />
-          <GlowingButton>Log in</GlowingButton>
+          <GlowingButton style={styles.button}>Log in</GlowingButton>
           <Text style={styles.text}>Just getting started?</Text>
-          <GradientButton style={styles.buttonSignUp}>Create an account</GradientButton>
+          <GradientButton
+            style={styles.button}
+            className="create-account-button">
+            Create an account
+          </GradientButton>
         </GlaringSegment>
       </MotiView>
     </SafeAreaView>
@@ -66,8 +70,8 @@ const styles = StyleSheet.create({
   segment: {
     margin: 24
   },
-  buttonSignUp: {
-    marginTop: 12,
+  button: {
+    marginVertical: 10,
   },
   text: {
     marginTop: 16,

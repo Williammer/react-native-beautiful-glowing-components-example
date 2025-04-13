@@ -1,0 +1,59 @@
+/* Web transitions for buttons */
+
+/* GlowingButton transitions */
+.glowing-button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.glowing-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 12px rgba(29, 78, 216, 0.25), 0 3px 6px rgba(0, 0, 0, 0.15) !important;
+  background-color: #1d4ed8 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.glowing-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%);
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.glowing-button:active::after {
+  opacity: 0;
+}
+
+/* GradientButton transitions */
+.gradient-button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  cursor: pointer;
+  width: auto !important;
+  min-width: 200px !important;
+}
+
+.gradient-button:hover {
+  transform: translateY(-2px) !important;
+  border-color: #1d4ed8 !important;
+  background-color: rgba(37, 99, 235, 0.04) !important;
+  letter-spacing: 0.03em !important;
+}
+
+.gradient-button:active {
+  transform: translateY(1px) !important;
+  transition: all 0.1s ease-in-out !important;
+}
+
+/* Fix for the create account button to make it consistent with other buttons */
+.create-account-button {
+  width: 100% !important;
+  max-width: 280px !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
